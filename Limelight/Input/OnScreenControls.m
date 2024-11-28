@@ -60,6 +60,7 @@
     BOOL r3Set;
     
     BOOL _iPad;
+    BOOL _isPortrait;
     CGRect _controlArea;
     UIView* _view;
     OnScreenControlsLevel _level;
@@ -122,10 +123,20 @@ static float L3_Y;
     
     _iPad = ([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad);
     _controlArea = CGRectMake(0, 0, _view.frame.size.width, _view.frame.size.height);
+    
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    _isPortrait = orientation == UIInterfaceOrientationPortrait || orientation == UIInterfaceOrientationPortrait;
+    
     if (_iPad)
     {
         // Cut down the control area on an iPad so the controls are more reachable
         _controlArea.size.height = _view.frame.size.height / 2.0;
+        _controlArea.origin.y = _view.frame.size.height - _controlArea.size.height;
+    }
+    else if (_isPortrait)
+    {
+        // Controls on the bottom, video on the top
+        _controlArea.size.height = _view.frame.size.height / 1.75;
         _controlArea.origin.y = _view.frame.size.height - _controlArea.size.height;
     }
     else
@@ -327,10 +338,17 @@ static float L3_Y;
 
 - (void) setupComplexControls
 {
-    D_PAD_CENTER_X = _controlArea.size.width * .1 + _controlArea.origin.x;
-    D_PAD_CENTER_Y = _controlArea.size.height * .60 + _controlArea.origin.y;
-    BUTTON_CENTER_X = _controlArea.size.width * .9 + _controlArea.origin.x;
-    BUTTON_CENTER_Y = _controlArea.size.height * .60 + _controlArea.origin.y;
+    if (_isPortrait) {
+        D_PAD_CENTER_X = _controlArea.size.width * .15 + _controlArea.origin.x;
+        D_PAD_CENTER_Y = _controlArea.size.height * .50 + _controlArea.origin.y;
+        BUTTON_CENTER_X = _controlArea.size.width * .85 + _controlArea.origin.x;
+        BUTTON_CENTER_Y = _controlArea.size.height * .50 + _controlArea.origin.y;
+    } else {
+        D_PAD_CENTER_X = _controlArea.size.width * .1 + _controlArea.origin.x;
+        D_PAD_CENTER_Y = _controlArea.size.height * .60 + _controlArea.origin.y;
+        BUTTON_CENTER_X = _controlArea.size.width * .9 + _controlArea.origin.x;
+        BUTTON_CENTER_Y = _controlArea.size.height * .60 + _controlArea.origin.y;
+    }
     
     if (_iPad)
     {
