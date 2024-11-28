@@ -339,9 +339,9 @@ static float L3_Y;
 - (void) setupComplexControls
 {
     if (_isPortrait) {
-        D_PAD_CENTER_X = _controlArea.size.width * .15 + _controlArea.origin.x;
+        D_PAD_CENTER_X = _controlArea.size.width * .225 + _controlArea.origin.x;
         D_PAD_CENTER_Y = _controlArea.size.height * .50 + _controlArea.origin.y;
-        BUTTON_CENTER_X = _controlArea.size.width * .85 + _controlArea.origin.x;
+        BUTTON_CENTER_X = _controlArea.size.width * .775 + _controlArea.origin.x;
         BUTTON_CENTER_Y = _controlArea.size.height * .50 + _controlArea.origin.y;
     } else {
         D_PAD_CENTER_X = _controlArea.size.width * .1 + _controlArea.origin.x;
@@ -356,6 +356,12 @@ static float L3_Y;
         LS_CENTER_X = _controlArea.size.width * .22 + _controlArea.origin.x;
         LS_CENTER_Y = _controlArea.size.height * .80 + _controlArea.origin.y;
         RS_CENTER_X = _controlArea.size.width * .77 + _controlArea.origin.x;
+        RS_CENTER_Y = _controlArea.size.height * .80 + _controlArea.origin.y;
+    }
+    else if (_isPortrait) {
+        LS_CENTER_X = _controlArea.size.width * .35 + _controlArea.origin.x;
+        LS_CENTER_Y = _controlArea.size.height * .80 + _controlArea.origin.y;
+        RS_CENTER_X = _controlArea.size.width * .65 + _controlArea.origin.x;
         RS_CENTER_Y = _controlArea.size.height * .80 + _controlArea.origin.y;
     }
     else
